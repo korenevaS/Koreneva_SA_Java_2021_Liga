@@ -2,6 +2,7 @@ package ru.digitalleague.factory.ok.notification;
 
 
 import ru.digitalleague.factory.ok.User;
+import ru.digitalleague.factory.ok.enums.NotificationPart;
 
 public class PhoneNotification implements Notification {
 
@@ -15,7 +16,7 @@ public class PhoneNotification implements Notification {
 
     public String getText() {
         return String.format(
-                "Phone #%s\n%s",
+                NotificationPart.PHONE.getCode() + " #%s\n%s",
                 user.getPhone(),
                 body
         );
