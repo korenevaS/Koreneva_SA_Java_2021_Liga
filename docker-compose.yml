@@ -1,0 +1,14 @@
+version: "3.7"
+services:
+  postgres:
+    image: lesson-6-pg-13.3
+    ports:
+      - "5432:5432"
+    working_dir: /docker
+    volumes:
+          - ./:/docker
+    environment:
+      POSTGRES_DB: ligadb
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: liga2021
+
