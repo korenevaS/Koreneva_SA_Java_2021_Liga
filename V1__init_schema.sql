@@ -39,10 +39,10 @@ create table if not exists "TeacherSubjects"
     foreign key (subject_id) references "Subject" (id)
 );
 
-create table if not exists "TeacherStudent"
+create table if not exists "StudentSubjects"
 (
-    teacher_id int not null,
+    subjects_id int not null,
     student_id int not null,
-    foreign key (teacher_id) references "Teacher" (id),
+    foreign key (subjects_id) references "Subjects" (id),
     foreign key (student_id) references "Student" (id)
 );
