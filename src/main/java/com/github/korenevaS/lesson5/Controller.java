@@ -11,12 +11,20 @@ import com.github.korenevaS.lesson5.service.OrderService;
 import com.github.korenevaS.lesson5.util.ConsoleUtil;
 import com.github.korenevaS.lesson5.util.ValidationUtil;
 
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Scanner;
 
 public class Controller {
-    private final BasketService basketService = new BasketService();
+    private final CatalogService catalogService = new CatalogService(
+            new Catalog(Arrays.asList(new Book("Дуглас Адамс: Автостопом по галактике", 552),
+                    new Book("Алексей Поляринов: Риф", 488),
+                    new Book("Стивен Кинг: Дьюма-Ки", 507),
+                    new Book("Теодор Драйзер: Гений", 594),
+                    new Book("Джон Уиндем: Зов пространства", 470)))
+    );
+    private final BasketService basketService = new BasketService(catalogService);
     private final OrderService orderService = new OrderService();
 
     public void performOrder() {
@@ -54,7 +62,7 @@ public class Controller {
         while (scan.hasNext()) {
             String input = scan.nextLine();
             if (Objects.equals(input, Commands.CATALOG.getCode())) {
-                Map<Integer, Book> books = CatalogService.getListBooks();
+                Map<Integer, Book> books = catalogService.getMapBooks();
                 books.forEach((index, book) -> System.out.println(index + ": " + book));
             } else if (Objects.equals(input, Commands.BASKET.getCode())) {
                 System.out.println(basketService.getBasketDescription(basket));
@@ -95,8 +103,8 @@ public class Controller {
                     } catch (NoSuchBookInBasketException e) {
                         ConsoleUtil.printRemoveError(e.getBook().getName());
                     } catch (NoSuchBookExistsException noSuchBookException2) {
-                    System.out.println(MessageType.WRONG_ID.getMessage());
-                }
+                        System.out.println(MessageType.WRONG_ID.getMessage());
+                    }
                 } else {
                     ConsoleUtil.printMessage(MessageType.WRONG_COMMAND);
                     ConsoleUtil.printHint();

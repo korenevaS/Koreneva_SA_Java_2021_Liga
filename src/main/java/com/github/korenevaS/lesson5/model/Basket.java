@@ -1,11 +1,9 @@
 package com.github.korenevaS.lesson5.model;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class Basket {
-    private final Map<Book, Integer> purchase = new HashMap<>();
+    private final Map<Book, Integer> purchase = new LinkedHashMap<>();
 
     public void putPurchase(Book goods, int number) {
         purchase.put(goods, number);
@@ -30,4 +28,19 @@ public class Basket {
     public Set<Map.Entry<Book, Integer>> getEntrySet() {
         return purchase.entrySet();
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Basket basket = (Basket) o;
+        return Objects.equals(purchase, basket.purchase);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(purchase);
+    }
+
+
 }

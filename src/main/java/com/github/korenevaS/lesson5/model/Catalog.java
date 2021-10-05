@@ -1,30 +1,41 @@
 package com.github.korenevaS.lesson5.model;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Catalog {
-    private final Map<Integer, Book> listOfBooks = new HashMap<>();
+    //private final LinkedHashMap<Integer, Book> listOfBooks = new LinkedHashMap<>;
+    private final LinkedHashMap<Integer, Book> mapOfBooks = new LinkedHashMap<>();
 
     public Catalog(List<Book> books) {
         if (books != null) {
             for (Book book : books) {
-                listOfBooks.put(listOfBooks.size() + 1, book);
+                mapOfBooks.put(mapOfBooks.size() + 1, book);
             }
         }
     }
 
     public Map<Integer, Book> getListBooks() {
-        return Collections.unmodifiableMap(listOfBooks);
+        return Collections.unmodifiableMap(mapOfBooks);
     }
 
     public boolean isBookExist(Integer id) {
-        return listOfBooks.containsKey(id);
+        return mapOfBooks.containsKey(id);
     }
 
     public Book findByID(Integer id) {
-        return listOfBooks.get(id);
+        return mapOfBooks.get(id);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Catalog catalog = (Catalog) o;
+        return Objects.equals(mapOfBooks, catalog.mapOfBooks);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(mapOfBooks);
     }
 }

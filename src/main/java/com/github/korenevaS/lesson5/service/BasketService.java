@@ -8,25 +8,31 @@ import com.github.korenevaS.lesson5.model.Book;
 import java.util.Map;
 
 public class BasketService implements Service {
+    private final CatalogService catalogService;
+
+    public BasketService(CatalogService catalogService) {
+        this.catalogService = catalogService;
+    }
 
     public void addPurchaseToBasket(Basket basket, Integer id) throws NoSuchBookExistsException {
-        if (CatalogService.checkBookDoesNotExistInCatalog(id)) {
+        if (catalogService.checkBookDoesNotExistInCatalog(id)) {
             throw new NoSuchBookExistsException(id);
         }
-        Book goods = CatalogService.findBookById(id);
+        Book goods = catalogService.findBookById(id);
         if (basket.isPurchaseContainsBook(goods)) {
             int number = basket.getBookQuantity(goods);
             basket.putPurchase(goods, number + 1);
         } else {
             basket.putPurchase(goods, 1);
         }
+
     }
 
     public void removePurchaseFromBasket(Basket basket, Integer id) throws NoSuchBookInBasketException, NoSuchBookExistsException {
-        if (CatalogService.checkBookDoesNotExistInCatalog(id)) {
+        if (catalogService.checkBookDoesNotExistInCatalog(id)) {
             throw new NoSuchBookExistsException(id);
         }
-        Book goods = CatalogService.findBookById(id);
+        Book goods = catalogService.findBookById(id);
         if (basket.isPurchaseContainsBook(goods)) {
             if (basket.getBookQuantity(goods) == 1) {
                 basket.removePurchase(goods);
