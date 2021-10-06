@@ -3,7 +3,6 @@ package com.github.korenevaS.lesson5.model;
 import java.util.*;
 
 public class Catalog {
-    //private final LinkedHashMap<Integer, Book> listOfBooks = new LinkedHashMap<>;
     private final LinkedHashMap<Integer, Book> mapOfBooks = new LinkedHashMap<>();
 
     public Catalog(List<Book> books) {
@@ -14,7 +13,7 @@ public class Catalog {
         }
     }
 
-    public Map<Integer, Book> getListBooks() {
+    public Map<Integer, Book> getBooks() {
         return Collections.unmodifiableMap(mapOfBooks);
     }
 

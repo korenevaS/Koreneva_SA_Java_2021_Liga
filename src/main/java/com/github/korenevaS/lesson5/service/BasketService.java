@@ -4,6 +4,8 @@ import com.github.korenevaS.lesson5.exception.NoSuchBookInBasketException;
 import com.github.korenevaS.lesson5.exception.NoSuchBookExistsException;
 import com.github.korenevaS.lesson5.model.Basket;
 import com.github.korenevaS.lesson5.model.Book;
+import com.github.korenevaS.lesson5.service.interfaces.CatalogService;
+import com.github.korenevaS.lesson5.service.interfaces.Service;
 
 import java.util.Map;
 
@@ -25,7 +27,6 @@ public class BasketService implements Service {
         } else {
             basket.putPurchase(goods, 1);
         }
-
     }
 
     public void removePurchaseFromBasket(Basket basket, Integer id) throws NoSuchBookInBasketException, NoSuchBookExistsException {

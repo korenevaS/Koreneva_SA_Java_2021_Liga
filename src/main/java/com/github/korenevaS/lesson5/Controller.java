@@ -6,7 +6,8 @@ import com.github.korenevaS.lesson5.model.*;
 import com.github.korenevaS.lesson5.model.enums.Commands;
 import com.github.korenevaS.lesson5.model.enums.MessageType;
 import com.github.korenevaS.lesson5.service.BasketService;
-import com.github.korenevaS.lesson5.service.CatalogService;
+import com.github.korenevaS.lesson5.service.interfaces.CatalogService;
+import com.github.korenevaS.lesson5.service.CatalogServiceImpl;
 import com.github.korenevaS.lesson5.service.OrderService;
 import com.github.korenevaS.lesson5.util.ConsoleUtil;
 import com.github.korenevaS.lesson5.util.ValidationUtil;
@@ -16,8 +17,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Scanner;
 
-public class Controller {
-    private final CatalogService catalogService = new CatalogService(
+public class  Controller {
+    private final CatalogService catalogService = new CatalogServiceImpl(
             new Catalog(Arrays.asList(new Book("Дуглас Адамс: Автостопом по галактике", 552),
                     new Book("Алексей Поляринов: Риф", 488),
                     new Book("Стивен Кинг: Дьюма-Ки", 507),

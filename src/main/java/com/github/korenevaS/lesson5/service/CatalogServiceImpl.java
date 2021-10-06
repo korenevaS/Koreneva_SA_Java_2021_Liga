@@ -2,14 +2,14 @@ package com.github.korenevaS.lesson5.service;
 
 import com.github.korenevaS.lesson5.model.Book;
 import com.github.korenevaS.lesson5.model.Catalog;
+import com.github.korenevaS.lesson5.service.interfaces.CatalogService;
 
-import java.util.Arrays;
 import java.util.Map;
 
-public class CatalogService implements Service {
+public class CatalogServiceImpl implements CatalogService {
     private final Catalog catalog;
 
-    public CatalogService(Catalog catalog) {
+    public CatalogServiceImpl(Catalog catalog) {
         this.catalog = catalog;
     }
 
@@ -18,7 +18,7 @@ public class CatalogService implements Service {
     }
 
     public Map<Integer, Book> getMapBooks() {
-        return catalog.getListBooks();
+        return catalog.getBooks();
     }
 
     public Book findBookById(Integer id) {

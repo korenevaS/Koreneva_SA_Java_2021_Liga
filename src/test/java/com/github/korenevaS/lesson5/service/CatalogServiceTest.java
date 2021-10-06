@@ -2,32 +2,32 @@ package com.github.korenevaS.lesson5.service;
 
 import com.github.korenevaS.lesson5.model.Book;
 import com.github.korenevaS.lesson5.model.Catalog;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.Arrays;
+import org.mockito.Mockito;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
 
 class CatalogServiceTest {
-    private final Catalog catalog = new Catalog(Arrays.asList(new Book("Дуглас Адамс: Автостопом по галактике", 552),
-            new Book("Алексей Поляринов: Риф", 488),
-            new Book("Стивен Кинг: Дьюма-Ки", 507),
-            new Book("Теодор Драйзер: Гений", 594),
-            new Book("Джон Уиндем: Зов пространства", 470)));
-
-    private final CatalogService catalogService = new CatalogService(catalog);
-    private final BasketService basketService = new BasketService(catalogService);
+    Catalog catalogMock = Mockito.mock(Catalog.class);
+    private final CatalogServiceImpl catalogService = new CatalogServiceImpl(catalogMock);
 
     Integer wrongId = 7;
     Integer id = 1;
 
+    @BeforeEach
+    void initMock() {
+        when(catalogMock.isBookExist(id)).thenReturn(true);
+        when(catalogMock.findByID(id)).thenReturn(new Book("for-example1", 500));
+        when(catalogMock.findByID(wrongId)).thenReturn(null);
+    }
 
     @DisplayName("Correct check of a book that does not exist in the directory.")
     @Test
     void correctCheckBookDoesNotExistInCatalog () {
         assertTrue(catalogService.checkBookDoesNotExistInCatalog(wrongId));
-
     }
 
     @DisplayName("Correct check of the book existing in the catalog.")
@@ -36,25 +36,15 @@ class CatalogServiceTest {
         assertFalse(catalogService.checkBookDoesNotExistInCatalog(id));
     }
 
-    @DisplayName("Correct get map of the books.")
-    @Test
-    void correctGetMapBooks() {
-        System.out.println(catalog.getListBooks());
-        System.out.println(catalogService.getMapBooks());
-        assertEquals(catalog.getListBooks(), catalogService.getMapBooks());
-    }
-
     @DisplayName("Correct find book by id.")
     @Test
     void correctFindById() {
-        catalog.findByID(id);
-        catalogService.findBookById(id);
+        assertEquals(catalogMock.findByID(id), catalogService.findBookById(id));
     }
 
     @DisplayName("Correct find book by wrong id.")
     @Test
     void correctFindByWrongId() {
-        catalog.findByID(wrongId);
-        catalogService.findBookById(wrongId);
+        assertEquals(catalogMock.findByID(wrongId), catalogService.findBookById(wrongId));
     }
 }
