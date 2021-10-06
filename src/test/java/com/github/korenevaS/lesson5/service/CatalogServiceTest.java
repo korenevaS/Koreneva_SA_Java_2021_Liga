@@ -1,5 +1,6 @@
 package com.github.korenevaS.lesson5.service;
 
+import com.github.korenevaS.lesson5.exception.NoSuchBookExistsException;
 import com.github.korenevaS.lesson5.model.Book;
 import com.github.korenevaS.lesson5.model.Catalog;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,7 +19,7 @@ class CatalogServiceTest {
     Integer id = 1;
 
     @BeforeEach
-    void initMock() {
+    void initMock() throws NoSuchBookExistsException {
         when(catalogMock.isBookExist(id)).thenReturn(true);
         when(catalogMock.findByID(id)).thenReturn(new Book("for-example1", 500));
         when(catalogMock.findByID(wrongId)).thenReturn(null);
@@ -38,13 +39,13 @@ class CatalogServiceTest {
 
     @DisplayName("Correct find book by id.")
     @Test
-    void correctFindById() {
+    void correctFindById() throws NoSuchBookExistsException {
         assertEquals(catalogMock.findByID(id), catalogService.findBookById(id));
     }
 
     @DisplayName("Correct find book by wrong id.")
     @Test
-    void correctFindByWrongId() {
+    void correctFindByWrongId() throws NoSuchBookExistsException {
         assertEquals(catalogMock.findByID(wrongId), catalogService.findBookById(wrongId));
     }
 }

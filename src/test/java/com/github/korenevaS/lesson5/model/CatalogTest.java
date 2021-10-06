@@ -1,5 +1,6 @@
 package com.github.korenevaS.lesson5.model;
 
+import com.github.korenevaS.lesson5.exception.NoSuchBookExistsException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -35,13 +36,13 @@ class CatalogTest {
 
     @DisplayName("Finding the book by the correct id.")
     @Test
-    void correctFindByID() {
+    void correctFindByID() throws NoSuchBookExistsException {
         assertEquals(book1, catalog.findByID(id));
     }
 
     @DisplayName("Finding the book by the wrong id.")
     @Test
     void correctFindByWrongID() {
-        assertNull(catalog.findByID(wrongId));
+        assertThrows(NoSuchBookExistsException.class, () -> catalog.findByID(wrongId));
     }
 }

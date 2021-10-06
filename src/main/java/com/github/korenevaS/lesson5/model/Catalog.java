@@ -1,5 +1,7 @@
 package com.github.korenevaS.lesson5.model;
 
+import com.github.korenevaS.lesson5.exception.NoSuchBookExistsException;
+
 import java.util.*;
 
 public class Catalog {
@@ -21,8 +23,10 @@ public class Catalog {
         return mapOfBooks.containsKey(id);
     }
 
-    public Book findByID(Integer id) {
-        return mapOfBooks.get(id);
+    public Book findByID(Integer id) throws NoSuchBookExistsException {
+        return Optional.ofNullable(id)
+                .map(mapOfBooks::get)
+                .orElseThrow(() -> new NoSuchBookExistsException(id));
     }
 
     @Override

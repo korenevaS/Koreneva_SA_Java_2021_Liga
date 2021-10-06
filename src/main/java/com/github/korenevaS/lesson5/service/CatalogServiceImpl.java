@@ -1,5 +1,6 @@
 package com.github.korenevaS.lesson5.service;
 
+import com.github.korenevaS.lesson5.exception.NoSuchBookExistsException;
 import com.github.korenevaS.lesson5.model.Book;
 import com.github.korenevaS.lesson5.model.Catalog;
 import com.github.korenevaS.lesson5.service.interfaces.CatalogService;
@@ -21,7 +22,7 @@ public class CatalogServiceImpl implements CatalogService {
         return catalog.getBooks();
     }
 
-    public Book findBookById(Integer id) {
+    public Book findBookById(Integer id) throws NoSuchBookExistsException {
         return catalog.findByID(id);
     }
 

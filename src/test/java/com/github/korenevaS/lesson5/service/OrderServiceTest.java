@@ -1,6 +1,5 @@
 package com.github.korenevaS.lesson5.service;
 
-import com.github.korenevaS.lesson5.service.interfaces.CatalogService;
 import com.github.korenevaS.lesson5.model.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -13,9 +12,7 @@ import static org.mockito.Mockito.when;
 class OrderServiceTest {
 
     OrderService orderService = new OrderService();
-    CatalogService catalogServiceMock = Mockito.mock(CatalogService.class);
     BasketService basketServiceMock = Mockito.mock(BasketService.class);
-    Basket basketMock = Mockito.mock(Basket.class);
     Basket emptyBasket = Mockito.mock(Basket.class);
     Basket filledBasket = Mockito.mock(Basket.class);
     Customer customer = Mockito.mock(Customer.class);

@@ -24,7 +24,7 @@ class BasketServiceTest {
     Integer wrongId = 8;
 
     @BeforeEach
-    void initMock() {
+    void initMock() throws NoSuchBookExistsException {
         when(catalogServiceMock.findBookById(id1)).thenReturn(new Book("for-example1", 500));
         when(catalogServiceMock.findBookById(id2)).thenReturn(new Book("for-example2", 500));
         when(catalogServiceMock.checkBookDoesNotExistInCatalog(wrongId)).thenReturn(true);
