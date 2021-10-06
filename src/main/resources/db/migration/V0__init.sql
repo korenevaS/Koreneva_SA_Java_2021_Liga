@@ -21,6 +21,7 @@ create table friends
 (
     user1_id int not null,
     user2_id int not null,
+    constraint chk_friends check (user1_id <> user2_id),
     foreign key (user1_id) references "user" (id) on delete cascade,
     foreign key (user2_id) references "user" (id) on delete cascade,
     primary key (user1_id, user2_id)
