@@ -1,0 +1,13 @@
+package com.github.korenevaS.lesson5.repository;
+
+import com.github.korenevaS.lesson5.model.Post;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+@Repository
+public interface PostRepository extends JpaRepository {
+    List<Post> findAllByUserId(Integer userId, Sort sort);
+}
