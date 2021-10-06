@@ -1,48 +1,50 @@
-create table if not exists "School"
+create table if not exists school
+(
+    id      int unique,
+    address varchar(255) not null
+);
+
+create table if not exists subject
+(
+    id   int unique,
+    name varchar(255) not null
+);
+
+create table if not exists teacher
 (
     id        int unique,
-    "Address" varchar(255) not null
+    full_name varchar(255) not null,
+    age       int          not null,
+    sex       varchar(10)  not null,
+    school_id int          not null,
+    foreign key (school_id) references school (id)
 );
 
-create table if not exists "Subject"
+
+create table if not exists student
 (
-    id     int unique,
-    "Name" varchar(255) not null
+    id        int unique,
+    full_name varchar(255) not null,
+    Age       int          not null,
+    Sex       varchar(10)  not null,
+    school_id int          not null,
+    foreign key (school_id) references school (id)
 );
 
-create table if not exists "Teacher"
-(
-    id          int unique,
-    "Full name" varchar(255) not null,
-    "Age"       int          not null,
-    "Sex"       varchar(10)  not null,
-    school_id   int          not null,
-    foreign key (school_id) references "School" (id)
-);
-
-
-create table if not exists "Student"
-(
-    id          int unique,
-    "Full name" varchar(255) not null,
-    "Age"       int          not null,
-    "Sex"       varchar(10)  not null,
-    school_id   int          not null,
-    foreign key (school_id) references "School" (id)
-);
-
-create table if not exists "TeacherSubjects"
+create table if not exists teacher_subjects
 (
     teacher_id int not null,
     subject_id int not null,
-    foreign key (teacher_id) references "Teacher" (id),
-    foreign key (subject_id) references "Subject" (id)
+    foreign key (teacher_id) references teacher (id),
+    foreign key (subject_id) references subject (id),
+    primary key (teacher_id, subject_id)
 );
 
-create table if not exists "StudentSubjects"
+create table if not exists student_subjects
 (
-    subjects_id int not null,
+    subject_id int not null,
     student_id int not null,
-    foreign key (subjects_id) references "Subjects" (id),
-    foreign key (student_id) references "Student" (id)
+    foreign key (subject_id) references subject (id),
+    foreign key (student_id) references student (id),
+    primary key (student_id, subject_id)
 );
