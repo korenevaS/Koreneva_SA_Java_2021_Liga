@@ -29,7 +29,9 @@ public class Post {
     @Column(name = "user_id")
     private User user;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    private List<User> friends;
-
+    public Post(Integer id, String body, User user, List<User> friends) {
+        this.id = id;
+        this.body = body;
+        this.user = user;
+    }
 }

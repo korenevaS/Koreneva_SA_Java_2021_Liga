@@ -7,6 +7,8 @@ import lombok.ToString;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
+import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "`user`")
@@ -35,4 +37,15 @@ public class User {
     @ManyToOne
     @Column(name = "school_id")
     private School school;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    private List<User> friends;
+
+    public User(Integer id, String firstName, String lastName, int age, String sex) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.age = age;
+        this.sex = sex;
+    }
 }
