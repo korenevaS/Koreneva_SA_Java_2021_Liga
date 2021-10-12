@@ -5,10 +5,19 @@ import java.util.concurrent.Executors;
 
 public class Main {
 
-    // Почему при вызове executorService.shutdown(); программа продолжает свое исполнение ?
-    // Почему если убрать строчку 28 (executorService.shutdown()) программа не прекратит свое исполнение
-    // даже после завершения всех тасок в executorService ?
-    // Почему при работе тасок executorService в консоль в секунду попадает всего 4 сообщения, тогда как тасок в executorService - 16?
+    /*1. Почему при вызове executorService.shutdown(); программа продолжает свое исполнение ?
+        Метод shutdown не дает принимать новые задачи, но позволяет выполнить уже имеющиеся.
+
+    2. Почему если убрать строчку 28 (executorService.shutdown()) программа не прекратит свое исполнение
+    даже после завершения всех тасок в executorService ?
+        newFixedThreadPool() не имеет тайминга на работу нитей, поэтому они будут работать, пока их кто-то не завершит.
+        Main ждет, пока завершаться выделенные потоки, но они не могут этого сделать.
+
+    3. Почему при работе тасок executorService в консоль в секунду попадает всего 4 сообщения, тогда как тасок
+    в executorService - 16?
+        При создании executorService было открыто 4 потока. Каждый из поток занят выполнением одной задачи, только
+        после выполнения которой он переходит к выполнению следующей.*/
+
     public static void main(String[] args) {
         startSomeDaemon();
 
@@ -27,7 +36,7 @@ public class Main {
                 System.err.println(String.format("Hello from %d callable", captureId));
             });
         }
-//        executorService.shutdown();
+        executorService.shutdown();
     }
 
     private static int getThreadsCount() {

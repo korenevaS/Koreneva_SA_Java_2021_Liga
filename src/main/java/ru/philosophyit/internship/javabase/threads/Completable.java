@@ -5,7 +5,12 @@ import java.util.function.Function;
 
 public class Completable {
     // Почему в выводе нет "Hello world"?
-    public static void main(String[] args) {
+
+    //Main отдает задачи потокам и тут же завершает работу. Так как остальные потоки - демоны,
+    //они завершат свою работу сразу же, когда работу завершат основные потоки (не демоны), а такой
+    //у нас только один - Main.
+    //Если мы заставим поток Main ждать завершение остальных потоков, то увидим в выводе "Hello world".
+    public static void main(String[] args) throws InterruptedException {
         CompletableFuture.supplyAsync(() -> {
             try {
                 Thread.sleep(1000);

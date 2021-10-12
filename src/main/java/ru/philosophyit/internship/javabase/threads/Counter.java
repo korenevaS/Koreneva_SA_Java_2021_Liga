@@ -1,26 +1,27 @@
 package ru.philosophyit.internship.javabase.threads;
 
+import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.IntStream;
 
 public class Counter {
-    static int counter = 0;
+    static AtomicInteger atomicCounter = new AtomicInteger(0);
     public static final int N_THREADS = 4;
-
     /// Перепишите код так, чтобы операция увеличения счетчика была синхронизируемой
     public static void main(String[] args) {
-        ExecutorService executorService = Executors.newFixedThreadPool(N_THREADS);
-        executorService.submit(() -> counter = counter + 1);
 
+        ExecutorService executorService = Executors.newFixedThreadPool(N_THREADS);
+        executorService.submit(() -> atomicCounter.addAndGet(1));
         CompletableFuture<?>[] futures = IntStream.range(0, N_THREADS)
                 .mapToObj(ignored -> runCounting(executorService))
                 .toArray(CompletableFuture[]::new);
 
         CompletableFuture.allOf(futures)
                 .thenApply(ignored -> {
-                    System.out.println(counter);
+                    System.out.println(atomicCounter);
                     executorService.shutdown();
                     return null;
                 });
@@ -29,7 +30,7 @@ public class Counter {
     static CompletableFuture<Void> runCounting(ExecutorService executorService) {
         return CompletableFuture.runAsync(() -> {
             for (int i = 0; i < 1000000; i++) {
-                Counter.counter = Counter.counter + 1;
+                    Counter.atomicCounter.addAndGet(1);
             }
         }, executorService);
     }
