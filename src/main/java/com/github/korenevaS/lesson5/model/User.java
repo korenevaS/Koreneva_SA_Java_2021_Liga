@@ -5,10 +5,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.Accessors;
+import org.hibernate.*;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
 @Table(name = "`user`")
@@ -35,10 +35,17 @@ public class User {
     private String sex;
 
     @ManyToOne
-    @Column(name = "school_id")
+    @Column(name = "school")
     private School school;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE}
+    )
+    @JoinTable(
+            name = "friends",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
     private List<User> friends;
 
     public User(Integer id, String firstName, String lastName, int age, String sex) {
